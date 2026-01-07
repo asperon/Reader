@@ -10,9 +10,10 @@ Clone the repository, then add it as a module to your Android project.
 
 ```kotlin
 startActivity(Intent(it.context, ReaderActivity::class.java).apply {
-putExtra(Intent.EXTRA_TITLE, "Title")
-putExtra(Intent.EXTRA_TEXT, "Text")
+    putExtra(Intent.EXTRA_TITLE, "Title")
+    putExtra(Intent.EXTRA_TEXT, "Text")
 })
+```
 
 ## Contributing
 
