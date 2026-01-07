@@ -1,0 +1,175 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/text_decrease"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:contentDescription="decrease text size"
+        android:src="@drawable/baseline_text_decrease_24" />
+
+    <TextView
+        android:id="@+id/text_current"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_toStartOf="@id/text_increase"
+        android:layout_toEndOf="@+id/text_decrease"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/text_increase"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="increase text size"
+        android:src="@drawable/baseline_text_increase_24" />
+
+
+    <ImageButton
+        android:id="@+id/line_height_decrease"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/text_decrease"
+        android:layout_alignParentStart="true"
+        android:contentDescription="decrease line height"
+        android:src="@drawable/baseline_format_line_spacing_24" />
+
+    <TextView
+        android:id="@+id/line_height_current"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/text_current"
+        android:layout_toStartOf="@id/line_height_increase"
+        android:layout_toEndOf="@+id/line_height_decrease"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/line_height_increase"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/text_increase"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="increase line height"
+        android:src="@drawable/baseline_format_line_spacing_24" />
+
+
+    <ImageButton
+        android:id="@+id/padding_decrease"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/line_height_decrease"
+        android:layout_alignParentStart="true"
+        android:contentDescription="decrease padding"
+        android:src="@drawable/format_letter_spacing_24px" />
+
+    <TextView
+        android:id="@+id/padding_current"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/line_height_current"
+        android:layout_toStartOf="@id/padding_increase"
+        android:layout_toEndOf="@+id/padding_decrease"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/padding_increase"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/line_height_increase"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="increase padding"
+        android:src="@drawable/format_letter_spacing_24px" />
+
+    <LinearLayout
+        android:id="@+id/alignment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/padding_decrease"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/format_left"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/format_align_left_24px" />
+
+        <ImageButton
+            android:id="@+id/format_center"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/format_align_center_24px" />
+
+        <ImageButton
+            android:id="@+id/format_justify"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/format_align_justify_24px" />
+
+        <ImageButton
+            android:id="@+id/format_right"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/format_align_right_24px" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/alignment"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/sans_serif"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/sans_serif_light"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-light"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/sans_serif_condensed"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/sans_serif_black"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-black"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/sans_serif_thin"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-thin"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/sans_serif_medium"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="A" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Reader</string>
+    <string name="settings">settings</string>
+    <string name="favorite">favorite</string>
+</resources>
