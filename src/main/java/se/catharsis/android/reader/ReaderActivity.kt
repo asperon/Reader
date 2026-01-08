@@ -1,5 +1,6 @@
 package se.catharsis.android.reader
 
+import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
@@ -50,15 +51,28 @@ class ReaderActivity : AppCompatActivity() {
         binding.textView.text = intent.getStringExtra(Intent.EXTRA_TEXT)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
     override fun onSupportNavigateUp(): Boolean {
+        setResult(RESULT_OK, Intent().putExtra(Intent.EXTRA_ARCHIVAL, favorite))
         onBackPressedDispatcher.onBackPressed()
         return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         binding.toolbar.inflateMenu(R.menu.reader_menu)
+        if (intent.hasExtra(Intent.EXTRA_ARCHIVAL)) {
+            binding.toolbar.menu.findItem(R.id.action_favorite).isVisible = true
+            favorite = intent.getBooleanExtra(Intent.EXTRA_ARCHIVAL, false)
+            toggleFav()
+        } else {
+            binding.toolbar.menu.findItem(R.id.action_favorite).isVisible = false
+        }
         return true
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_settings -> {
@@ -165,18 +179,22 @@ class ReaderActivity : AppCompatActivity() {
 
         R.id.action_favorite -> {
             favorite = !favorite
-            if (favorite) {
-                binding.toolbar.menu.findItem(R.id.action_favorite).icon =
-                    AppCompatResources.getDrawable(this, R.drawable.baseline_favorite_24)
-            } else {
-                binding.toolbar.menu.findItem(R.id.action_favorite).icon =
-                    AppCompatResources.getDrawable(this, R.drawable.baseline_favorite_border_24)
-            }
+            toggleFav()
             true
         }
 
         else -> {
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun toggleFav() {
+        if (favorite) {
+            binding.toolbar.menu.findItem(R.id.action_favorite).icon =
+                AppCompatResources.getDrawable(this, R.drawable.baseline_favorite_24)
+        } else {
+            binding.toolbar.menu.findItem(R.id.action_favorite).icon =
+                AppCompatResources.getDrawable(this, R.drawable.baseline_favorite_border_24)
         }
     }
 
