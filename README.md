@@ -15,7 +15,7 @@ startActivity(Intent(it.context, ReaderActivity::class.java).apply {
 })
 ```
 
-To use the favorite button feature, send an additional extra Intent.EXTRA_ARCHIVAL to reflect the state of the favorite button, the reader will return the current state of it as a result ones its being closed.
+To use the favorite button feature, send an additional extra Intent.EXTRA_ARCHIVAL to reflect the state of the favorite button, the reader will return the current state of it as a result when its closed.
 
 ```kotlin
 val showContent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
