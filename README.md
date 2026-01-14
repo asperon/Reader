@@ -9,7 +9,7 @@ Clone the repository, then add it as a module to your Android project.
 ## Usage
 
 ```kotlin
-startActivity(Intent(it.context, ReaderActivity::class.java).apply {
+startActivity(Intent(context, ReaderActivity::class.java).apply {
     putExtra(Intent.EXTRA_TITLE, "Title")
     putExtra(Intent.EXTRA_TEXT, "Text")
 })
@@ -25,7 +25,7 @@ val showContent = registerForActivityResult(ActivityResultContracts.StartActivit
     }
 }
 
-val intent = Intent(this@MainActivity, ReaderActivity::class.java).apply {
+val intent = Intent(context, ReaderActivity::class.java).apply {
     putExtra(Intent.EXTRA_TITLE, story.title)
     putExtra(Intent.EXTRA_TEXT, story.content)
     putExtra(Intent.EXTRA_ARCHIVAL, story.favorite)
