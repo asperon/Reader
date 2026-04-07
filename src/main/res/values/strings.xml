@@ -2,4 +2,14 @@
     <string name="app_name">Reader</string>
     <string name="settings">settings</string>
     <string name="favorite">favorite</string>
+    <string name="left">Left</string>
+    <string name="center">Center</string>
+    <string name="justify">Justify</string>
+    <string name="right">Right</string>
+    <string name="increase_padding">increase padding</string>
+    <string name="decrease_padding">decrease padding</string>
+    <string name="increase_line_height">increase line height</string>
+    <string name="decrease_line_height">decrease line height</string>
+    <string name="increase_text_size">increase text size</string>
+    <string name="decrease_text_size">decrease text size</string>
 </resources>

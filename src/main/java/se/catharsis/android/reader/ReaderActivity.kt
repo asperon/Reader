@@ -1,6 +1,5 @@
 package se.catharsis.android.reader
 
-import android.app.Activity
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Typeface
@@ -21,6 +20,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.setPadding
 import se.catharsis.android.reader.databinding.ActivityReaderBinding
 import se.catharsis.android.reader.databinding.DialogSettingsBinding
+import androidx.core.view.size
+import androidx.core.view.get
 
 class ReaderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityReaderBinding
@@ -47,29 +48,26 @@ class ReaderActivity : AppCompatActivity() {
 
         updateTextView()
 
-        binding.toolbar.title = intent.getStringExtra(Intent.EXTRA_TITLE)
+        supportActionBar?.title = intent.getStringExtra(Intent.EXTRA_TITLE)
         binding.textView.text = intent.getStringExtra(Intent.EXTRA_TEXT)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     override fun onSupportNavigateUp(): Boolean {
-        setResult(RESULT_OK, Intent().putExtra(Intent.EXTRA_ARCHIVAL, favorite))
+        setResult(RESULT_OK, Intent().putExtra("android.intent.extra.FAVORITE", favorite))
         onBackPressedDispatcher.onBackPressed()
         return true
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        binding.toolbar.inflateMenu(R.menu.reader_menu)
-        if (intent.hasExtra(Intent.EXTRA_ARCHIVAL)) {
-            binding.toolbar.menu.findItem(R.id.action_favorite).isVisible = true
-            favorite = intent.getBooleanExtra(Intent.EXTRA_ARCHIVAL, false)
+        menuInflater.inflate(R.menu.reader_menu, menu)
+        if (intent.hasExtra("android.intent.extra.FAVORITE")) {
+            menu?.findItem(R.id.action_favorite)?.isVisible = true
+            favorite = intent.getBooleanExtra("android.intent.extra.FAVORITE", false)
             toggleFav()
         } else {
-            binding.toolbar.menu.findItem(R.id.action_favorite).isVisible = false
+            menu?.findItem(R.id.action_favorite)?.isVisible = false
         }
+        updateTextView()
         return true
     }
 
@@ -164,6 +162,18 @@ class ReaderActivity : AppCompatActivity() {
                     sharedPref.edit { putString("fontFamily", "sans-serif-medium") }
                     updateTextView()
                 }
+                binding.themeLight.setOnClickListener {
+                    sharedPref.edit { putInt("theme", 0) }
+                    updateTextView()
+                }
+                binding.themeSepia.setOnClickListener {
+                    sharedPref.edit { putInt("theme", 1) }
+                    updateTextView()
+                }
+                binding.themeDark.setOnClickListener {
+                    sharedPref.edit { putInt("theme", 2) }
+                    updateTextView()
+                }
                 setCancelable(true)
             }.create()
             dialog.show()
@@ -189,20 +199,46 @@ class ReaderActivity : AppCompatActivity() {
     }
 
     private fun toggleFav() {
-        if (favorite) {
-            binding.toolbar.menu.findItem(R.id.action_favorite).icon =
-                AppCompatResources.getDrawable(this, R.drawable.baseline_favorite_24)
-        } else {
-            binding.toolbar.menu.findItem(R.id.action_favorite).icon =
-                AppCompatResources.getDrawable(this, R.drawable.baseline_favorite_border_24)
+        val theme = sharedPref.getInt("theme", 0)
+        val textColor = when (theme) {
+            1 -> getColor(R.color.sepia_text)
+            2 -> getColor(R.color.dark_text)
+            else -> getColor(R.color.light_text)
         }
+        val iconRes = if (favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+        val icon = AppCompatResources.getDrawable(this, iconRes)?.apply {
+            setTint(textColor)
+        }
+        binding.toolbar.menu.findItem(R.id.action_favorite).icon = icon
     }
 
     private fun updateTextView() {
+        val theme = sharedPref.getInt("theme", 0)
+        val bgColor = when (theme) {
+            1 -> getColor(R.color.sepia_bg)
+            2 -> getColor(R.color.dark_bg)
+            else -> getColor(R.color.light_bg)
+        }
+        val textColor = when (theme) {
+            1 -> getColor(R.color.sepia_text)
+            2 -> getColor(R.color.dark_text)
+            else -> getColor(R.color.light_text)
+        }
+
+        binding.reader.setBackgroundColor(bgColor)
+        binding.toolbar.setBackgroundColor(bgColor)
+        binding.toolbar.setTitleTextColor(textColor)
+        binding.toolbar.navigationIcon?.setTint(textColor)
+        val menu = binding.toolbar.menu
+        for (i in 0 until menu.size) {
+            menu[i].icon?.setTint(textColor)
+        }
+        binding.textView.setBackgroundColor(bgColor)
+        binding.textView.setTextColor(textColor)
+
         binding.textView.setPadding(sharedPref.getInt("padding", 20))
         binding.textView.lineHeight = sharedPref.getInt("lineHeight", 33)
-        binding.textView.typeface =
-            Typeface.create(sharedPref.getString("fontFamily", "sans-serif"), Typeface.NORMAL)
+        binding.textView.typeface = Typeface.create(sharedPref.getString("fontFamily", "sans-serif"), Typeface.NORMAL)
         binding.textView.textSize = sharedPref.getFloat("textSize", 16f)
         val textAlignment = sharedPref.getInt("textAlignment", 0)
         if (textAlignment == 3) {
